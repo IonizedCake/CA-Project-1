@@ -12,10 +12,6 @@ reg 		r;
 
 assign data_o=r;
 
-initial begin
-	r=0;
-end
-
 always@(data1_i or data2_i)begin
 	if(data1_i==data2_i)begin
 		r <= 1;

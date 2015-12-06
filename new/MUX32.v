@@ -12,19 +12,20 @@ output [31:0] data_o;
 
 reg [31:0] r;
 
-assign data_o=r;
+//assign data_o=r;
 
-initial begin
+assign data_o=data1_i;//debug
+/*initial begin
 	r=data1_i;
 end
 
 always@(flag_i)begin
-	if(flag_i)begin
+	if(flag_i==1)begin
 		r <= data2_i;
 	end
 	else begin
 		r <= data1_i;
 	end
-end
+end*/
 
 endmodule

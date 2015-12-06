@@ -21,16 +21,21 @@ initial begin
 	pc_o = 32'b0;
 end
 
-always@(posedge clk_i or hd_i) begin
-	if(hd_i) begin
+always@(posedge clk_i) begin
+	if(start_i) begin
+		if(hd_i)begin
+			$display("start=1,pc=pco");//debug
+			pc_o <= pc_o;
+		end
+		else begin
+			$display("start=1,pc=pci");//debug
+			pc_o <= pc_i;
+		end
+	end
+	else begin
+		$display("start=0,pc=pco");//debug
 		pc_o <= pc_o;
 	end
-    else begin
-        if(start_i)
-            pc_o <= pc_i;
-        else
-            pc_o <= pc_o;
-    end
 end
 
 endmodule
