@@ -1,13 +1,13 @@
 module Registers
 (
-    clk_i,
+	clk_i,
     RSaddr_i,
     RTaddr_i,
     RDaddr_i, 
     RDdata_i,
     RegWrite_i, 
     RSdata_o, 
-    RTdata_o 
+    RTdata_o
 );
 
 // Ports

@@ -1,5 +1,6 @@
 module IF_ID
 (
+	clk_i,
 	hd_i,
 	adder_i,
 	instr_i,
@@ -8,6 +9,7 @@ module IF_ID
 	addr_o	
 );
 
+input			clk_i;
 input 			hd_i,flush_i;
 input [31:0]	adder_i,instr_i;
 output	[31:0]	instr_o,addr_o;
@@ -17,7 +19,7 @@ reg [31:0]	addr,instr;
 assign instr_o=instr;
 assign addr_o=addr;
 
-always@(hd_i or adder_i or instr_i or flush_i)begin
+always@(posedge clk_i)begin
 	if(hd_i)begin
 		instr <= instr;
 		addr <= addr;

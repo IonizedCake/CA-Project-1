@@ -1,4 +1,4 @@
-module Or_gate
+module And_gate
 (
 	data1_i,
 	data2_i,
@@ -6,8 +6,8 @@ module Or_gate
 );
 
 input 	data1_i,data2_i;
-output 	data_o;
+output	data_o;
 
-assign data_o=data1_i | data2_i;
+assign data_o=data1_i & data2_i;
 
 endmodule
