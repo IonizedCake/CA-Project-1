@@ -12,20 +12,13 @@ output [31:0] data_o;
 
 reg [31:0] r;
 
-//assign data_o=r;
+assign data_o=r;
 
-assign data_o=data1_i;//debug
-/*initial begin
-	r=data1_i;
+always@(data1_i or data2_i or flag_i)begin
+	case(flag_i)
+		1:r <= data2_i;
+		default:r <= data1_i;
+	endcase
 end
-
-always@(flag_i)begin
-	if(flag_i==1)begin
-		r <= data2_i;
-	end
-	else begin
-		r <= data1_i;
-	end
-end*/
 
 endmodule

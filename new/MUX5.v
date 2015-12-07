@@ -14,7 +14,7 @@ reg [4:0] r;
 
 assign data_o=r;
 
-always@(flag_i)begin
+always@(data1_i or data2_i or flag_i)begin
 	if(flag_i)begin
 		r <= data2_i;
 	end

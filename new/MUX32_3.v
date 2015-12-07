@@ -14,7 +14,7 @@ reg 	[31:0]		data;
 
 assign data_o=data;
 
-always@(sel_i)begin
+always@(sel_i or data1_i or data2_i or data3_i)begin
 	case(sel_i)
 		2'b00:data <= data1_i;
 		2'b01:data <= data2_i;

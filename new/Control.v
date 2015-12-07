@@ -36,7 +36,7 @@ always@(Op_i)begin
 		6'b001000:r <= 10'b0001000001;//addi
 		6'b100011:r <= 10'b0011010001;//lw
 		6'b101011:r <= 10'b0000100001;//sw
-		default:r <= 10'b0001001101;
+		default:r <= 10'b0001001100;
 	endcase
 end
 

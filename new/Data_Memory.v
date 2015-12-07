@@ -20,13 +20,12 @@ assign data_o=r;
 
 always@(posedge clk_i)begin
 	if(MemWrite_i)begin
-		memory[addr_i] <= data_i;
+		memory[addr_i] = data_i;
 	end
 	else if(MemRead_i)begin
-		r <= memory[addr_i];
+		r = memory[addr_i];
 	end
 	else begin
-		r <= data_o;
 	end
 end
 

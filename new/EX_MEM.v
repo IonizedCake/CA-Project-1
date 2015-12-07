@@ -37,11 +37,11 @@ assign ALUdata_o=ALUdata;
 assign data_o=mux7;
 
 always@(posedge clk_i)begin
-	wb <= WB_i;
-	m <= M_i;
-	RDaddr <= RDaddr_i;
-	ALUdata <= ALUdata_i;
-	mux7 <= mux7_i;
+	wb = WB_i;
+	m = M_i;
+	RDaddr = RDaddr_i;
+	ALUdata = ALUdata_i;
+	mux7 = mux7_i;
 end
 
 endmodule
