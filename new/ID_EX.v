@@ -54,7 +54,6 @@ assign ALUOp_o=ex[2:1];
 assign RegDst_o=ex[3];
 
 always@(posedge clk_i)begin
-	$display("rsaddr=%d,rtaddr=%d",RSaddr,RTaddr);//debug
 	wb <=WB_i;
 	m <= M_i;
 	ex <= EX_i;

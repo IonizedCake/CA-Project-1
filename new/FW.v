@@ -12,7 +12,7 @@ module FW
 
 input	[4:0]	ID_EX_RTaddr_i,ID_EX_RSaddr_i,EX_MEM_RDaddr_i,MEM_WB_RDaddr_i;
 input			EX_MEM_WB_i,MEM_WB_WB_i;
-output 	[1:0]		mux6_o,mux7_o;
+output 	[1:0]	mux6_o,mux7_o;
 reg 	[1:0] 	mux6,mux7;
 
 assign mux6_o=mux6;

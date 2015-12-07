@@ -113,8 +113,8 @@ MEM_WB MEM_WB(
 	.MemToReg_o	(Mux5.flag_i),
 	.RegWrite_o	(MEM_WB_RegWrite),
 	.RDaddr_o	(MEM_WB_RDaddr),
-	.ALUdata_o	(Mux5.data2_i),
-	.DataMem_o	(Mux5.data1_i)
+	.ALUdata_o	(Mux5.data1_i),
+	.DataMem_o	(Mux5.data2_i)
 );
 
 PC PC(
@@ -152,7 +152,6 @@ Instruction_Memory Instruction_Memory(
 );
 
 Data_Memory Data_Memory(
-	.clk_i		(clk_i),
 	.MemWrite_i	(EX_MEM.MemWrite_o),
 	.MemRead_i	(EX_MEM.MemRead_o),
 	.data_i		(EX_MEM.data_o),
