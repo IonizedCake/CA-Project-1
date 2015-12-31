@@ -31,6 +31,10 @@ assign	RDaddr_o=RDaddr;
 assign	ALUdata_o=ALUdata;
 assign	DataMem_o=DataMem;
 
+initial begin
+	wb=2'b0;
+end
+
 always@(posedge clk_i)begin
 	if(~stall_i)begin
 		wb <= WB_i;

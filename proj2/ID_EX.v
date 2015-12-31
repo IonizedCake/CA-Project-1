@@ -53,6 +53,11 @@ assign ALUSrc_o=ex[0];
 assign ALUOp_o=ex[2:1];
 assign RegDst_o=ex[3];
 
+initial begin
+	wb=2'b0;
+	m=2'b0;
+end
+
 always@(posedge clk_i)begin
 	if(~stall_i)begin
 		wb <=WB_i;

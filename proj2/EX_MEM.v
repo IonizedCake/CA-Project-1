@@ -37,6 +37,11 @@ assign RDaddr_o=RDaddr;
 assign ALUdata_o=ALUdata;
 assign data_o=mux7;
 
+initial begin
+	wb=2'b0;
+	m=2'b0;
+end
+
 always@(posedge clk_i)begin
 	if(~stall_i)begin
 		wb = WB_i;

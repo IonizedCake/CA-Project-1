@@ -20,6 +20,11 @@ reg [31:0]	addr,instr;
 assign instr_o=instr;
 assign addr_o=addr;
 
+initial begin
+	instr=32'b0;
+	addr=32'b0;
+end
+
 always@(posedge clk_i)begin
 	if(hd_i || stall_i)begin
 		instr <= instr;

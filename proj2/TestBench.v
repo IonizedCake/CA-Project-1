@@ -101,19 +101,13 @@ always@(posedge Clk) begin
 			Data_Memory.memory[address] = CPU.dcache.dcache_data_sram.memory[i];
 		end 
 	end
-	if(counter > 20) begin	// stop/////////////////150 
+	if(counter > 150) begin	// stop 
 		$stop;
 	end
 		
 	$fdisplay(outfile, "cycle = %d, Start = %b", counter, Start);
 	// print PC 
 	$fdisplay(outfile, "PC = %d", CPU.PC.pc_o);
-	$fdisplay(outfile, "pcEnable_i = %d,cache_stall=%d", CPU.PC.pcEnable_i,CPU.cache_stall);///////debug
-	$fdisplay(outfile, "hit = %d,flag=%d",CPU.dcache.hit,CPU.dcache.p1_req);//debug
-	$fdisplay(outfile, "sram_tag = %b,p1_tag=%b,sram_valid=%d",CPU.dcache.sram_tag,CPU.dcache.p1_tag,CPU.dcache.sram_valid);//debug
-	$fdisplay(outfile, "ALUdata=%b",CPU.EX_MEM_ALUdata);//debug
-	$fdisplay(outfile, "RS=%d,RT=%d",CPU.ID_EX.RSdata_o,CPU.ID_EX.RTdata_o);//debug
-	$fdisplay(outfile, "instruction=%b",CPU.inst);//debug
 
 	// print Registers
 	$fdisplay(outfile, "Registers");
