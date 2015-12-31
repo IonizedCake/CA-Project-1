@@ -24,10 +24,10 @@ end
 
 always@(addr1_i or addr2_i or RTaddr_i or MEM_i)begin
 	if(MEM_i &&((RTaddr_i==addr1_i) || (RTaddr_i==addr2_i)))begin
-		r <= 0;
+		r <= 1;
 	end
 	else begin
-		r <= 1;
+		r <= 0;
 	end
 end
 

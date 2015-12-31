@@ -27,17 +27,16 @@ output	[32-1:0]	mem_addr_o;
 output				mem_enable_o; 
 output				mem_write_o; 
 
-wire				cache_stall;
-
-//project1 vars
+//
 wire 	[31:0] 	inst_addr,inst,mux1,ctrlBit,Add_PC_data;
 wire	[31:0]	ID_EX_jumpAddr,EX_MEM_ALUdata,Registers_RSdata,Registers_RTdata;
 wire	[31:0]	Mux5_data,Mux7_data,Signed_Extend_data;
 wire	[4:0]	ID_EX_RTaddr,EX_MEM_RDaddr,MEM_WB_RDaddr;
 wire	 		And_Branch_data,MEM_WB_RegWrite,Control_jump;
+
+wire 			cache_stall;
 //
 
-//project1 modules
 Control Control(
     .Op_i       (inst[31:26]),
 	.jump_o		(Control_jump),
@@ -141,17 +140,6 @@ MEM_WB MEM_WB(
 	.RDaddr_o	(MEM_WB_RDaddr),
 	.ALUdata_o	(Mux5.data1_i),
 	.DataMem_o	(Mux5.data2_i)
-);
-
-PC PC
-(
-	.clk_i		(clk_i),
-	.rst_i		(rst_i),
-	.start_i	(start_i),
-	.stall_i	(cache_stall),
-	.pcEnable_i	(HD.pc_o),
-	.pc_i		(Mux2.data_o),
-	.pc_o		(inst_addr)
 );
 
 HD HD(
@@ -294,7 +282,17 @@ ALU_Control ALU_Control(
     .ALUOp_i    (ID_EX.ALUOp_o),
     .ALUCtrl_o  (ALU.ALUCtrl_i)
 );
-//
+
+PC PC
+(
+	.clk_i(clk_i),
+	.rst_i(rst_i),
+	.start_i(start_i),
+	.stall_i(cache_stall),
+	.pcEnable_i(HD.pc_o),
+	.pc_i(Mux2.data_o),
+	.pc_o(inst_addr)
+);
 
 //data cache
 dcache_top dcache
@@ -312,12 +310,12 @@ dcache_top dcache
 	.mem_write_o(mem_write_o), 
 	
 	// to CPU interface	
-	.p1_data_i		(EX_MEM.data_o), 
-	.p1_addr_i		(EX_MEM_ALUdata), 	
-	.p1_MemRead_i	(EX_MEM.MemRead_o), 
-	.p1_MemWrite_i	(EX_MEM.MemWrite_o), 
-	.p1_data_o		(MEM_WB.DataMem_i), 
-	.p1_stall_o		(cache_stall)
+	.p1_data_i(EX_MEM.data_o), 
+	.p1_addr_i(EX_MEM_ALUdata), 	
+	.p1_MemRead_i(EX_MEM.MemRead_o), 
+	.p1_MemWrite_i(EX_MEM.MemWrite_o), 
+	.p1_data_o(MEM_WB.DataMem_i), 
+	.p1_stall_o	(cache_stall)
 );
 
 endmodule

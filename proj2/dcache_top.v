@@ -119,28 +119,40 @@ assign	cache_dirty  = write_hit;
 
 // tag comparator
 //!!! add you code here!  (hit=...?,  r_hit_data=...?)
-assign	hit= (sram_tag==p1_tag) & sram_valid;
+assign	hit= ((sram_tag==p1_tag) & sram_valid) ? 1'b1 : 1'b0;
 assign  r_hit_data=sram_cache_data;
 	
 // read data :  256-bit to 32-bit
 always@(p1_offset or r_hit_data) begin
 	//!!! add you code here! (p1_data=...?)
-	p1_data=r_hit_data[(p1_offset*8+7):(p1_offset*8)];
+	case(p1_offset>>2)
+		0:p1_data=r_hit_data[31:0];
+		1:p1_data=r_hit_data[63:32];
+		2:p1_data=r_hit_data[95:64];
+		3:p1_data=r_hit_data[127:96];
+		4:p1_data=r_hit_data[159:128];
+		5:p1_data=r_hit_data[191:160];
+		6:p1_data=r_hit_data[223:192];
+		7:p1_data=r_hit_data[255:224];
+		default:p1_data=32'b0;
+	endcase
 end
 
 
 // write data :  32-bit to 256-bit
 always@(p1_offset or r_hit_data or p1_data_i) begin
 	//!!! add you code here! (w_hit_data=...?)
-	if(p1_offset==0)begin
-		w_hit_data={r_hit_data[255:8],p1_data_i};
-	end
-	else if(p1_offset==31)begin
-		w_hit_data={p1_data_i,r_hit_data[247:0]}
-	end
-	else begin
-		w_hit_data={r_hit_data[255:((offset+1)*8)],p1_data_i,r_hit_data[(offset*8-1):0]};
-	end
+	case(p1_offset>>2)
+		0:w_hit_data={r_hit_data[255:32],p1_data_i};
+		1:w_hit_data={r_hit_data[255:64],p1_data_i,r_hit_data[31:0]};
+		2:w_hit_data={r_hit_data[255:96],p1_data_i,r_hit_data[63:0]};
+		3:w_hit_data={r_hit_data[255:128],p1_data_i,r_hit_data[95:0]};
+		4:w_hit_data={r_hit_data[255:160],p1_data_i,r_hit_data[127:0]};
+		5:w_hit_data={r_hit_data[255:192],p1_data_i,r_hit_data[159:0]};
+		6:w_hit_data={r_hit_data[255:224],p1_data_i,r_hit_data[191:0]};
+		7:w_hit_data={p1_data_i,r_hit_data[223:0]};
+		default:w_hit_data=256'b0;
+	endcase
 end
 
 
@@ -168,12 +180,14 @@ always@(posedge clk_i or negedge rst_i) begin
 	                //!!! add you code here!
 					mem_enable <= 1'b1;
 					mem_write <= 1'b1;
+					write_back <= 1'b1;
 					state <= STATE_WRITEBACK;
 				end
 				else begin					//write allocate: write miss = read miss + write hit; read miss = read miss + read hit
 	                //!!! add you code here!
 					mem_enable <= 1'b1;
-					cache_we <= 1'b1;
+					mem_write <= 1'b0;
+					write_back <= 1'b0;
 					state <= STATE_READMISS;
 				end
 			end
@@ -181,7 +195,7 @@ always@(posedge clk_i or negedge rst_i) begin
 				if(mem_ack_i) begin			//wait for data memory acknowledge
 	                //!!! add you code here!
 					mem_enable <= 1'b0;
-					cache_we <= 1'b0;
+					cache_we <= 1'b1;
 					state <= STATE_READMISSOK;
 				end
 				else begin
@@ -189,13 +203,14 @@ always@(posedge clk_i or negedge rst_i) begin
 				end
 			end
 			STATE_READMISSOK: begin			//wait for data memory acknowledge
-	                //!!! add you code here! 
+	                //!!! add you code here!
+					cache_we <= 1'b0;
 				state <= STATE_IDLE;
 			end
 			STATE_WRITEBACK: begin
 				if(mem_ack_i) begin			//wait for data memory acknowledge
 	                //!!! add you code here!
-					mem_write <= 1'b1;
+					mem_write <= 1'b0;
 					write_back <= 1'b0;
 					state <= STATE_READMISS;
 				end

@@ -16,7 +16,7 @@ module EX_MEM
 	ALUdata_o
 );
 
-input			clk_i;
+input			clk_i,stall_i;
 input	[1:0]	WB_i,M_i;
 input	[4:0]	RDaddr_i;
 input	[31:0]	ALUdata_i,mux7_i;
