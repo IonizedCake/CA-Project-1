@@ -120,7 +120,7 @@ assign	cache_dirty  = write_hit;
 // tag comparator
 //!!! add you code here!  (hit=...?,  r_hit_data=...?)
 assign	hit= ((sram_tag==p1_tag) & sram_valid) ? 1'b1 : 1'b0;
-assign  r_hit_data=sram_cache_data;
+assign  r_hit_data=hit ? sram_cache_data : 256'b0;
 	
 // read data :  256-bit to 32-bit
 always@(p1_offset or r_hit_data) begin
@@ -187,15 +187,14 @@ always@(posedge clk_i or negedge rst_i) begin
 	                //!!! add you code here!
 					mem_enable <= 1'b1;
 					mem_write <= 1'b0;
-					write_back <= 1'b0;
 					state <= STATE_READMISS;
 				end
 			end
 			STATE_READMISS: begin
 				if(mem_ack_i) begin			//wait for data memory acknowledge
 	                //!!! add you code here!
-					mem_enable <= 1'b0;
 					cache_we <= 1'b1;
+					mem_enable <= 1'b0;
 					state <= STATE_READMISSOK;
 				end
 				else begin

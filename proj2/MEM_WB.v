@@ -33,6 +33,9 @@ assign	DataMem_o=DataMem;
 
 initial begin
 	wb=2'b0;
+	RDaddr=5'b0;
+	ALUdata=32'b0;
+	DataMem=32'b0;
 end
 
 always@(posedge clk_i)begin

@@ -56,6 +56,13 @@ assign RegDst_o=ex[3];
 initial begin
 	wb=2'b0;
 	m=2'b0;
+	ex=4'b0;
+	RSaddr=5'b0;
+	RTaddr=5'b0;
+	RDaddr=5'b0;
+	RSdata=32'b0;
+	RTdata=32'b0;
+	jumpAddr=32'b0;
 end
 
 always@(posedge clk_i)begin
